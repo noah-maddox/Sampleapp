@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoontootlaComponent } from './noontootla/noontootla.component';
 import { NimblewillComponent } from './nimblewill/nimblewill.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NoontootlaComponent,
-    NimblewillComponent
+    NimblewillComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
