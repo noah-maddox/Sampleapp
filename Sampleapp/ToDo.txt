@@ -1,0 +1,4 @@
+- make the app mobile - friendly (small screen hamburger)
+- find out how to make images load faster
+- change title of app to "GreatOutdoors"
+- header and footer
