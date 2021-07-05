@@ -8,6 +8,9 @@ import { NimblewillComponent } from './nimblewill/nimblewill.component';
 import { HomeComponent } from './home/home.component';
 import { OgdenComponent } from './ogden/ogden.component';
 import { TriallakeComponent } from './triallake/triallake.component';
+import { FirescreekComponent } from './firescreek/firescreek.component';
+import { MillcreekComponent } from './millcreek/millcreek.component';
+import { BigcottonindianComponent } from './bigcottonindian/bigcottonindian.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { TriallakeComponent } from './triallake/triallake.component';
     NimblewillComponent,
     HomeComponent,
     OgdenComponent,
-    TriallakeComponent
+    TriallakeComponent,
+    FirescreekComponent,
+    MillcreekComponent,
+    BigcottonindianComponent
   ],
   imports: [
     BrowserModule,
