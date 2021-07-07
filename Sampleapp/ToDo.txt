@@ -1,5 +1,4 @@
 - make the app mobile - friendly (small screen hamburger)
-- change title of app to "GreatOutdoors"
 - header and footer
 
 (darren advice)

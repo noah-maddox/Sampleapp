@@ -11,6 +11,7 @@ import { TriallakeComponent } from './triallake/triallake.component';
 import { FirescreekComponent } from './firescreek/firescreek.component';
 import { MillcreekComponent } from './millcreek/millcreek.component';
 import { BigcottonindianComponent } from './bigcottonindian/bigcottonindian.component';
+import { BlacksmithsforkleftComponent } from './blacksmithsforkleft/blacksmithsforkleft.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BigcottonindianComponent } from './bigcottonindian/bigcottonindian.comp
     TriallakeComponent,
     FirescreekComponent,
     MillcreekComponent,
-    BigcottonindianComponent
+    BigcottonindianComponent,
+    BlacksmithsforkleftComponent
   ],
   imports: [
     BrowserModule,

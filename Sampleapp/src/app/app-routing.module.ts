@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BigcottonindianComponent } from './bigcottonindian/bigcottonindian.component';
+import { BlacksmithsforkleftComponent } from './blacksmithsforkleft/blacksmithsforkleft.component';
 import { FirescreekComponent } from './firescreek/firescreek.component';
 import { HomeComponent } from './home/home.component';
 import { MillcreekComponent } from './millcreek/millcreek.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'bigcottonindian', component: BigcottonindianComponent },
   { path: 'firescreek', component: FirescreekComponent },
   { path: 'millcreek', component: MillcreekComponent },
+  { path: 'blacksmithsforkleft', component: BlacksmithsforkleftComponent },
 ];
 
 @NgModule({
