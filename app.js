@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 
-//const mysql = require("mysql");
+const mysql = require("mysql");
 
 const path = require("path");
 
@@ -12,35 +12,35 @@ app.use(express.static(path.join(__dirname, "Sampleapp/dist/Sampleapp")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// var con = mysql.createConnection({
-//   host: "daboy.com",
-//   database: "daboycom_noah",
-//   user: "daboycom_noah",
-//   password: "sdlkdjfsd&6dDS",
-// });
+var con = mysql.createConnection({
+  host: "daboy.com",
+  database: "daboycom_noah",
+  user: "daboycom_noah",
+  password: "sdlkdjfsd&6dDS",
+});
 
-// con.connect(function (err) {
-//   if (err) throw err;
-// });
+con.connect(function (err) {
+  if (err) throw err;
+});
 
-// app.use(bodyParser.json()); // to support JSON-encoded bodies
-// app.use(
-//   bodyParser.urlencoded({
-//     // to support URL-encoded bodies
-//     extended: true,
-//   })
-// );
+app.use(bodyParser.json()); // to support JSON-encoded bodies
+app.use(
+  bodyParser.urlencoded({
+    // to support URL-encoded bodies
+    extended: true,
+  })
+);
 
 app.get("/firstroute", (req, res) => {
   res.send("welcome to the firstroute");
 });
 
-// app.get("/accounts", function (req, res) {
-//   con.query("select * from accounts", function (error, results, fields) {
-//     if (error) throw error;
-//     res.end(JSON.stringify(results));
-//   });
-// });
+app.get("/accounts", function (req, res) {
+  con.query("select * from accounts", function (error, results, fields) {
+    if (error) throw error;
+    res.end(JSON.stringify(results));
+  });
+});
 
 // app.post("/insertuser", async (req, res) => {
 //   try {
