@@ -35,6 +35,22 @@ app.get("/accounts", function (req, res) {
   });
 });
 
+app.get("/accounts/:username", (req, res) => {
+  const username = req.params.username;
+  db.query(
+    "select * from accounts where username = ?",
+    username,
+    (error, results) => {
+      if (error) throw error;
+      res.json({
+        status: 200,
+        results,
+        message: "Individual user retrieved successfully",
+      });
+    }
+  );
+});
+
 app.post("/insertaccount", (req, res) => {
   try {
     const username = req.body.username;
@@ -42,7 +58,6 @@ app.post("/insertaccount", (req, res) => {
     const email = req.body.email;
     const created_on = new Date();
 
-    //res.json(await create(req.body));
     db.query(
       "INSERT INTO accounts (username, password, email, created_on) VALUES (?, ?, ?, ?)",
       [username, password, email, created_on]
@@ -54,27 +69,6 @@ app.post("/insertaccount", (req, res) => {
     res.send(err);
   }
 });
-
-// async function create(request) {
-//   const username = request.username;
-//   const password = request.password;
-//   const email = request.email;
-//   const created_on = new Date();
-// const result = await db.query(
-//   "INSERT INTO accounts (username, password, email, created_on) VALUES (?, ?, ?, ?)",
-//   [username, password, email, created_on]
-// );
-
-// return result;
-
-// let message = "Error in creating new account";
-
-// if (result.affectedRows) {
-//   message = "New Account created successfully";
-// }
-
-// return { message };
-//}
 
 app.get("/index", (req, res) => {
   res.sendFile(path.join(__dirname, "/Sampleapp/dist/Sampleapp/index.html"));
