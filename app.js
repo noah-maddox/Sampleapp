@@ -1,9 +1,8 @@
 const express = require("express");
-//const client = require("./database");
 const bodyParser = require("body-parser");
 const app = express();
 
-const mysql = require("mysql");
+const db = require("./database");
 
 const path = require("path");
 
@@ -11,17 +10,6 @@ app.use(express.static(path.join(__dirname, "Sampleapp/dist/Sampleapp")));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-var con = mysql.createConnection({
-  host: "daboy.com",
-  database: "daboycom_noah",
-  user: "daboycom_noah",
-  password: "sdlkdjfsd&6dDS",
-});
-
-con.connect(function (err) {
-  if (err) throw err;
-});
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(
@@ -36,7 +24,7 @@ app.get("/firstroute", (req, res) => {
 });
 
 app.get("/accounts", function (req, res) {
-  con.query("select * from accounts", function (error, results, fields) {
+  db.query("select * from accounts", function (error, results, fields) {
     if (error) throw error;
     res.end(JSON.stringify(results));
   });
@@ -68,12 +56,3 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT || 8080);
 module.exports = app;
-
-//client.connect();
-
-// client.query(`select * from accounts`, (err, result) => {
-//   if (!err) {
-//     console.log(result.rows);
-//   }
-//   client.end();
-// });
