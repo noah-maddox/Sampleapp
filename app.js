@@ -24,27 +24,57 @@ app.get("/firstroute", (req, res) => {
 });
 
 app.get("/accounts", function (req, res) {
-  db.query("select * from accounts", function (error, results, fields) {
+  let sql = "select * from accounts";
+  db.query(sql, function (error, results, fields) {
     if (error) throw error;
-    res.end(JSON.stringify(results));
+    res.json({
+      status: 200,
+      results,
+      message: "User accounts retrieved successfully",
+    });
   });
 });
 
-// app.post("/insertuser", async (req, res) => {
-//   try {
-//     const username = req.body.username;
-//     const password = req.body.password;
-//     const email = req.body.email;
-//     const newUser = await client.query(
-//       "INSERT INTO accounts (username, password, email) VALUES ($1, $2, $3) RETURNING *",
-//       [username, password, email]
-//     );
+app.post("/insertaccount", (req, res) => {
+  try {
+    const username = req.body.username;
+    const password = req.body.password;
+    const email = req.body.email;
+    const created_on = new Date();
 
-//     res.json(newUser.rows[0]);
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-// });
+    //res.json(await create(req.body));
+    db.query(
+      "INSERT INTO accounts (username, password, email, created_on) VALUES (?, ?, ?, ?)",
+      [username, password, email, created_on]
+    );
+    res.send("successfully inserted new account!");
+    //);
+  } catch (err) {
+    console.error(err.message);
+    res.send(err);
+  }
+});
+
+// async function create(request) {
+//   const username = request.username;
+//   const password = request.password;
+//   const email = request.email;
+//   const created_on = new Date();
+// const result = await db.query(
+//   "INSERT INTO accounts (username, password, email, created_on) VALUES (?, ?, ?, ?)",
+//   [username, password, email, created_on]
+// );
+
+// return result;
+
+// let message = "Error in creating new account";
+
+// if (result.affectedRows) {
+//   message = "New Account created successfully";
+// }
+
+// return { message };
+//}
 
 app.get("/index", (req, res) => {
   res.sendFile(path.join(__dirname, "/Sampleapp/dist/Sampleapp/index.html"));
