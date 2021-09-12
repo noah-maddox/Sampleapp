@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NoontootlaComponent } from './noontootla/noontootla.component';
 import { NimblewillComponent } from './nimblewill/nimblewill.component';
@@ -13,6 +14,7 @@ import { MillcreekComponent } from './millcreek/millcreek.component';
 import { BigcottonindianComponent } from './bigcottonindian/bigcottonindian.component';
 import { BlacksmithsforkleftComponent } from './blacksmithsforkleft/blacksmithsforkleft.component';
 import { BlacksmithsforkComponent } from './blacksmithsfork/blacksmithsfork.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,13 +28,10 @@ import { BlacksmithsforkComponent } from './blacksmithsfork/blacksmithsfork.comp
     MillcreekComponent,
     BigcottonindianComponent,
     BlacksmithsforkleftComponent,
-    BlacksmithsforkComponent
+    BlacksmithsforkComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
