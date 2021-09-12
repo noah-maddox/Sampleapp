@@ -1,8 +1,17 @@
-- make the app mobile - friendly (small screen hamburger)
-- header and footer
+- app crashes at failed insert
+- Add ssl to the project link
+- why do I have the localhost:8080 error popup when I insert an account??
+- Make github repo private without affecting the automatic build in aws
+- add database
+    - table for user login info
+    - table for comments
+- header and footer components
+- hide peoples passwords somehow from myself
+- need to clear out the field contents when they submit the from
+- need to check and make sure the username doesnt already exist in the database
+- add some type of automated test that clicks all the buttons (finc test?)
+
 
 (darren advice)
-- You need to rezide the images to make them smaller.  For example the one with the fish in the net is 4.24MB and 3024x4032 pixels.  
-You should rezide them down to < 1000 x 1000px.  That should make them around 100k which will make them download a lot faster.
 - You might also want to strip out the Meta Data in the images so people can see it.  
 For example I can see that you took the pictures on a Samsung Galaxy S10e phone on June 11th, 2021 2:21pm

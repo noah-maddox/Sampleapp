@@ -11,6 +11,15 @@ app.use(express.static(path.join(__dirname, "Sampleapp/dist/Sampleapp")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(
   bodyParser.urlencoded({
@@ -27,11 +36,7 @@ app.get("/accounts", function (req, res) {
   let sql = "select * from accounts";
   db.query(sql, function (error, results, fields) {
     if (error) throw error;
-    res.json({
-      status: 200,
-      results,
-      message: "User accounts retrieved successfully",
-    });
+    res.json(results);
   });
 });
 
@@ -41,17 +46,23 @@ app.get("/accounts/:username", (req, res) => {
     "select * from accounts where username = ?",
     username,
     (error, results) => {
-      if (error) throw error;
-      res.json({
-        status: 200,
-        results,
-        message: "Individual user retrieved successfully",
-      });
+      if (error) {
+        throw error;
+      } else if (results.length == 0) {
+        res.json({ message: "No user with this username" });
+      } else {
+        res.json({
+          status: 200,
+          results,
+          message: "Individual user retrieved successfully",
+        });
+      }
     }
   );
 });
 
 app.post("/insertaccount", (req, res) => {
+  console.log(req.body);
   try {
     const username = req.body.username;
     const password = req.body.password;
