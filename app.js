@@ -101,6 +101,6 @@ const sslServer = https.createServer(
 );
 
 //app.listen(process.env.PORT || 8080);
-sslServer.listen(3443, () => console.log("Secure Server on port 3443"));
+sslServer.listen(process.env.PORT || 3443);
 
 module.exports = app;
