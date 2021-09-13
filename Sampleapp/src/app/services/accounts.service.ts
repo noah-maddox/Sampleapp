@@ -10,7 +10,9 @@ import { Account } from '../modal/account';
 export class AccountsService {
   // Define API
   //apiURL = 'http://localhost:8080';
-  apiURL = 'http://www.exploregreatoutdoors.com';
+  // ssl link
+  //apiURL = 'https://localhost:3443';
+  apiURL = 'https://www.exploregreatoutdoors.com';
   accounts;
 
   constructor(private http: HttpClient) {}

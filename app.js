@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const https = require("https");
+const fs = require("fs");
 const app = express();
 
 const db = require("./database");
@@ -90,5 +92,15 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/Sampleapp/dist/Sampleapp/index.html"));
 });
 
-app.listen(process.env.PORT || 8080);
+const sslServer = https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname, "cert", "server.key")),
+    cert: fs.readFileSync(path.join(__dirname, "cert", "server.crt")),
+  },
+  app
+);
+
+//app.listen(process.env.PORT || 8080);
+sslServer.listen(3443, () => console.log("Secure Server on port 3443"));
+
 module.exports = app;
