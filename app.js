@@ -92,15 +92,15 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "/Sampleapp/dist/Sampleapp/index.html"));
 });
 
-const sslServer = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname, "cert", "server.key")),
-    cert: fs.readFileSync(path.join(__dirname, "cert", "server.crt")),
-  },
-  app
-);
+// const sslServer = https.createServer(
+//   {
+//     key: fs.readFileSync(path.join(__dirname, "cert", "server.key")),
+//     cert: fs.readFileSync(path.join(__dirname, "cert", "server.crt")),
+//   },
+//   app
+// );
 
-//app.listen(process.env.PORT || 8080);
-sslServer.listen(process.env.PORT || 3443);
+app.listen(process.env.PORT || 8080);
+//sslServer.listen(process.env.PORT || 3443);
 
 module.exports = app;
