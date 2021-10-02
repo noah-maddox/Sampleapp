@@ -12,8 +12,8 @@ export class AccountsService {
   //apiURL = 'http://localhost:8081';
   // ssl link
   //apiURL = 'https://localhost:3443';
-  //apiURL = 'https://www.exploregreatoutdoors.com';
-  apiURL = 'http://www.exploregreatoutdoors.com';
+  apiURL = 'https://www.exploregreatoutdoors.com';
+  //apiURL = 'http://www.exploregreatoutdoors.com';
   accounts;
 
   constructor(private http: HttpClient) {}
