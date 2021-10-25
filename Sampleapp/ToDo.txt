@@ -1,15 +1,14 @@
 - app crashes at failed insert
 - Add ssl to the project link
-- why do I have the localhost:8080 error popup when I insert an account??
 - Make github repo private without affecting the automatic build in aws
 - add database
-    - table for user login info
+    - table for user login info DONE
     - table for comments
 - header and footer components
 - hide peoples passwords somehow from myself
-- need to clear out the field contents when they submit the from
-- need to check and make sure the username doesnt already exist in the database
+- need to check and make sure the username doesnt already exist in the database (need to add something in UI to tell user about this)
 - add some type of automated test that clicks all the buttons (finc test?)
+- find some type of way to decrypt the password as it is coming in
 
 
 (darren advice)
