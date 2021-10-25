@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const crypto = require("crypto");
+const algorithm = "aes-256-cbc";
 const https = require("https");
 const fs = require("fs");
 const app = express();
@@ -7,6 +9,18 @@ const app = express();
 const db = require("./database");
 
 const path = require("path");
+
+// generate 16 bytes of random data
+const initVector = crypto.randomBytes(16);
+
+// protected data
+const message = "This is a secret message";
+
+// secret key generate 32 bytes of random data
+const Securitykey = crypto.randomBytes(32);
+
+// the cipher function
+const cipher = crypto.createCipheriv(algorithm, Securitykey, initVector);
 
 app.use(express.static(path.join(__dirname, "Sampleapp/dist/Sampleapp")));
 
@@ -35,11 +49,29 @@ app.get("/firstroute", (req, res) => {
   res.send("welcome to the firstroute");
 });
 
-app.get("/accounts", function (req, res) {
-  let sql = "select * from accounts";
-  db.query(sql, function (error, results, fields) {
-    if (error) throw error;
-    res.json(results);
+app.get("/accounts", (req, res) => {
+  const sql = "select * from accounts";
+  db.query(sql, (error, results, fields) => {
+    if (error) {
+      throw error;
+    } else if (results.length == 0) {
+      res.json({ message: "Failed to return users" });
+    } else {
+      // for (field in fields) {
+      //   // the decipher function
+      //   const decipher = crypto.createDecipheriv(algorithm, Securitykey, initVector);
+
+      //   let decryptedData = decipher.update(encryptedData, "hex", "utf-8");
+
+      //   decryptedData += decipher.final("utf8");
+
+      //   console.log("Decrypted message: " + decryptedData);
+      //   field.password
+      // }
+      res.json({
+        results,
+      });
+    }
   });
 });
 
@@ -54,10 +86,25 @@ app.get("/accounts/:username", (req, res) => {
       } else if (results.length == 0) {
         res.json({ message: "No user with this username" });
       } else {
+        console.log("result BEFORE decryption " + results[0].password);
+        // the decipher function
+        const decipher = crypto.createDecipheriv(
+          algorithm,
+          Securitykey,
+          initVector
+        );
+
+        let decryptedData = decipher.update(
+          results[0].password,
+          "hex",
+          "utf-8"
+        );
+
+        decryptedData += decipher.final("utf8");
+
+        console.log("result AFTER decryption " + decryptedData);
         res.json({
-          status: 200,
           results,
-          message: "Individual user retrieved successfully",
         });
       }
     }
@@ -65,12 +112,22 @@ app.get("/accounts/:username", (req, res) => {
 });
 
 app.post("/insertaccount", (req, res) => {
-  console.log(req.body);
   try {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
     const created_on = new Date();
+
+    // encrypt the message
+    // input encoding
+    // output encoding
+    // let encryptedPassword = cipher.update(password, "utf-8", "hex");
+
+    // encryptedPassword += cipher.final("hex");
+
+    // console.log(
+    //   "Encrypted password for " + username + " is " + encryptedPassword
+    // );
 
     db.query(
       "INSERT INTO accounts (username, password, email, created_on) VALUES (?, ?, ?, ?)",

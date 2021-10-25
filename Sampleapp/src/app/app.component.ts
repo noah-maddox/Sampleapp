@@ -48,34 +48,17 @@ export class AppComponent implements AfterViewInit {
   addAccount(createAccountForm: NgForm) {
     // need some kind of loading icon for while we are iterating over the list
     this.testModal?.toggle();
-    if (this.accounts != null) {
-      for (var val of this.accounts) {
-        if (createAccountForm.value.username === val.username) {
-          console.log(
-            'the submitted value ' +
-              createAccountForm.value.username +
-              ' already exists in the database'
-          );
-          createAccountForm.reset();
-          return;
-        }
+    this.accountsService.addAccount(createAccountForm.value).subscribe(
+      (response) => {
+        this.getAccounts();
+        createAccountForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        createAccountForm.reset();
       }
-      this.accountsService.addAccount(createAccountForm.value).subscribe(
-        (response) => {
-          this.getAccounts();
-          createAccountForm.reset();
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-          createAccountForm.reset();
-        }
-      );
-    } else {
-      console.log(
-        'accounts is null so we cant check if the account has already been created'
-      );
-      createAccountForm.reset();
-    }
+    );
+    createAccountForm.reset();
   }
 
   openModal() {
