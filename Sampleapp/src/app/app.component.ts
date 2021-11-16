@@ -6,7 +6,17 @@ import { NgForm } from '@angular/forms';
 import { Modal } from 'bootstrap';
 import { Account } from './modal/account';
 import { AccountsService } from './services/accounts.service';
+import { environment } from 'src/environments/environment';
+import {
+  CognitoUserAttribute,
+  CognitoUserPool,
+} from 'amazon-cognito-identity-js';
 declare var bootstrap: any;
+
+interface formDataInterface {
+  email: string;
+  [key: string]: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -16,12 +26,17 @@ declare var bootstrap: any;
 export class AppComponent implements AfterViewInit {
   errorMsg: string;
 
-  public accounts: Account[];
+  accounts: Account[];
 
   title = 'GreatOutdoors';
   isCollapsed = true;
   testModal: Modal | undefined;
   createdAccount: Account;
+
+  isLoading: boolean = false;
+  authModal: Modal | undefined;
+  email: string = '';
+  password: string = '';
 
   constructor(
     private elementRef: ElementRef,
@@ -30,7 +45,7 @@ export class AppComponent implements AfterViewInit {
 
   public getAccounts(): void {
     this.accountsService.getAccounts().subscribe(
-      (response: Account[]) => {
+      (response: any[]) => {
         this.accounts = response;
       },
       (error: HttpErrorResponse) => {
@@ -59,6 +74,45 @@ export class AppComponent implements AfterViewInit {
       }
     );
     createAccountForm.reset();
+  }
+
+  onSignup(form: NgForm) {
+    this.testModal?.toggle();
+    if (form.valid) {
+      this.isLoading = true;
+      var poolData = {
+        UserPoolId: environment.cognitoUserPoolId, // Your user pool id here
+        ClientId: environment.cognitoAppClientId, // Your client id here
+      };
+      var userPool = new CognitoUserPool(poolData);
+      var attributeList = [];
+      let formData: formDataInterface = {
+        email: this.email,
+      };
+
+      for (let key in formData) {
+        let attrData = {
+          Name: key,
+          Value: formData[key],
+        };
+        let attribute = new CognitoUserAttribute(attrData);
+        attributeList.push(attribute);
+      }
+      userPool.signUp(
+        this.email,
+        this.password,
+        attributeList,
+        [],
+        (err, result) => {
+          this.isLoading = false;
+          if (err) {
+            alert(err.message || JSON.stringify(err));
+            return;
+          }
+        }
+      );
+    }
+    form.reset();
   }
 
   openModal() {

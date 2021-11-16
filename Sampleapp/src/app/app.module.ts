@@ -15,6 +15,7 @@ import { BigcottonindianComponent } from './bigcottonindian/bigcottonindian.comp
 import { BlacksmithsforkleftComponent } from './blacksmithsforkleft/blacksmithsforkleft.component';
 import { BlacksmithsforkComponent } from './blacksmithsfork/blacksmithsfork.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,13 @@ import { FormsModule } from '@angular/forms';
     BlacksmithsforkleftComponent,
     BlacksmithsforkComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
