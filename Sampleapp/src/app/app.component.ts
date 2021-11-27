@@ -45,7 +45,7 @@ export class AppComponent implements AfterViewInit {
 
   public getAccounts(): void {
     this.accountsService.getAccounts().subscribe(
-      (response: any[]) => {
+      (response) => {
         this.accounts = response;
       },
       (error: HttpErrorResponse) => {

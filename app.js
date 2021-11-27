@@ -86,23 +86,23 @@ app.get("/accounts/:username", (req, res) => {
       } else if (results.length == 0) {
         res.json({ message: "No user with this username" });
       } else {
-        console.log("result BEFORE decryption " + results[0].password);
-        // the decipher function
-        const decipher = crypto.createDecipheriv(
-          algorithm,
-          Securitykey,
-          initVector
-        );
+        res.json({
+          results,
+        });
+      }
+    }
+  );
+});
 
-        let decryptedData = decipher.update(
-          results[0].password,
-          "hex",
-          "utf-8"
-        );
-
-        decryptedData += decipher.final("utf8");
-
-        console.log("result AFTER decryption " + decryptedData);
+app.get("/getCommentsForView", (req, res) => {
+  const view_name = req.query.view_name;
+  db.query(
+    "select * from comments where view_name = ?",
+    view_name,
+    (error, results) => {
+      if (error) {
+        throw error;
+      } else {
         res.json({
           results,
         });
@@ -134,6 +134,26 @@ app.post("/insertaccount", (req, res) => {
       [username, password, email, created_on]
     );
     res.send("successfully inserted new account!");
+    //);
+  } catch (err) {
+    console.error(err.message);
+    res.send(err);
+  }
+});
+
+app.post("/addcomments", (req, res) => {
+  try {
+    const username = req.body.username;
+    const comments = req.body.comments;
+    const view_id = req.body.view_id;
+    const view_name = req.body.view_name;
+    const created_on = new Date();
+
+    db.query(
+      "INSERT INTO comments (username, comments, view_id, view_name, created_on) VALUES (?, ?, ?, ?, ?)",
+      [username, comments, view_id, view_name, created_on]
+    );
+    res.send("successfully inserted new comments!");
     //);
   } catch (err) {
     console.error(err.message);
